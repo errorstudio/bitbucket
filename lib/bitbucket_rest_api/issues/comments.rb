@@ -84,7 +84,7 @@ module BitBucket
     #  bitbucket.issues.comments.edit 'user-name', 'repo-name', 'comment-id',
     #     "content" => 'a new comment'
     #
-    def edit(user_name, repo_name, comment_id, params={})
+    def edit(user_name, repo_name, issue_id, comment_id, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of comment_id
@@ -94,7 +94,7 @@ module BitBucket
       filter! VALID_ISSUE_COMMENT_PARAM_NAME, params
       assert_required_keys(%w[ content ], params)
 
-      put_request("/repositories/#{user}/#{repo}/issues/comments/#{comment_id}")
+      put_request("/repositories/#{user}/#{repo}/issues/#{issue_id}/comments/#{comment_id}")
     end
 
     # Delete a comment
